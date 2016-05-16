@@ -9,16 +9,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Spitter {
 	private long id;
 	@NotNull
-	@Size(min=2, max=30)
+	@Size(min=2, max=30, message="{firstName.size}")
 	private String firstName;
 	@NotNull
-	@Size(min=2, max=30)
+	@Size(min=2, max=30, message="{lastName.size}")
 	private String lastName;
 	@NotNull
-	@Size(min=5, max=16)
+	@Size(min=5, max=16, message="{username.size}")
 	private String username;
 	@NotNull
-	@Size(min=5, max=25)
+	@Size(min=5, max=25, message="{password.size}")
 	private String password;
 	
 	public Spitter(){
