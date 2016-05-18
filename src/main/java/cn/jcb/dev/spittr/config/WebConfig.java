@@ -1,5 +1,7 @@
 package cn.jcb.dev.spittr.config;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,11 +13,22 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("cn.jcb.dev.spittr.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 
 //	@Bean
 //	public ViewResolver viewResolver() {
@@ -29,15 +42,36 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //		resolver.setExposeContextBeansAsAttributes(true);
 //		return resolver;
 //	}
+	
+	
+//	@Bean
+//	public ViewResolver viewResolver() {
+//		return new TilesViewResolver();
+//	}
+	
+
 	@Bean
-	public ViewResolver viewResolver() {
-		return new TilesViewResolver();
+	public ITemplateResolver templateResolver(ServletContext servletContext) {
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		templateResolver.setPrefix("/WEB-INF/templates/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode("HTML5");
+		return templateResolver;
 	}
 	
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
+	@Bean
+	public ITemplateEngine templateEngine(ITemplateResolver templateResolver) {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver);
+		return templateEngine;
 	}
+
+	@Bean
+	public ViewResolver viewResolver(ITemplateEngine templateEngine) {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(templateEngine);
+		return viewResolver;
+	}	
 	
 	@Bean
 	public MessageSource messageSource() {
@@ -53,11 +87,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 * a TilesConfigurer bean whose job is to locate and load tile definitions 
 	 * and generally coordinate Tiles.
 	 */
-	@Bean
-	public TilesConfigurer tilesConfigurer() {
-		TilesConfigurer tiles = new TilesConfigurer();
-		tiles.setDefinitions(new String[] { "/WEB-INF/layout/tiles.xml" });
-		tiles.setCheckRefresh(true);
-		return tiles;
-	}
+//	@Bean
+//	public TilesConfigurer tilesConfigurer() {
+//		TilesConfigurer tiles = new TilesConfigurer();
+//		tiles.setDefinitions(new String[] { "/WEB-INF/layout/tiles.xml" });
+//		tiles.setCheckRefresh(true);
+//		return tiles;
+//	}
 }
