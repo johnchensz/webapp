@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import cn.jcb.dev.spittr.data.SpitterRepository;
 import cn.jcb.dev.spittr.domain.Spitter;
@@ -30,12 +31,21 @@ public class SpitterController {
 		return "registerForm";
 	}
 	
+	/**
+	 * 
+	 * @param profilePicture If the user submits the form without selecting a file, then the array will be empty (but not null).
+	 * @param unsaveSpitter
+	 * @param errors
+	 * @return
+	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration(@Valid Spitter unsaveSpitter, Errors errors) {
+	public String processRegistration(@RequestPart("profilePicture") byte[] profilePicture,
+			@Valid Spitter unsaveSpitter, Errors errors) 
+	{
 		if (errors.hasErrors()) {
-			  return "registerForm";
+			return "registerForm";
 		}
-		
+
 		Spitter spitter = spitterRepository.save(unsaveSpitter);
 		return "redirect:/spitter/" + spitter.getUsername();
 	}

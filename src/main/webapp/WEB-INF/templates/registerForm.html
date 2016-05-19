@@ -25,12 +25,16 @@ input.error {
 
 	<h1>Register</h1>
 
-	<form method="POST" th:object="${spitter}">
+	<form method="POST" th:object="${spitter}" enctype="multipart/form-data">
 		<div class="errors" th:if="${#fields.hasErrors('*')}">
 			<ul>
 				<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
 			</ul>
 		</div>
+		
+		<label>Profile Picture</label>:
+		<input type="file" name="profilePicture" accept="image/jpeg,image/png,image/gif" /><br/>
+
 		<label th:class="${#fields.hasErrors('firstName')}? 'error'">First Name</label>: 
 		<input type="text" th:field="*{firstName}" th:class="${#fields.hasErrors('firstName')}? 'error'" /><br /> 
 			
