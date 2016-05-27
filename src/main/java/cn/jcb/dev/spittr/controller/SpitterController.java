@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.jcb.dev.spittr.data.SpitterRepository;
+import cn.jcb.dev.spittr.domain.ProfilePicture;
 import cn.jcb.dev.spittr.domain.Spitter;
 
 @Controller
@@ -39,13 +41,13 @@ public class SpitterController {
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration(@RequestPart("profilePicture") byte[] profilePicture,
-			@Valid Spitter unsaveSpitter, Errors errors) 
+	public String processRegistration(@Valid Spitter unsaveSpitter, Errors errors) 
+//	public String processRegistration(@RequestPart("profilePicture") MultipartFile profilePicture, @Valid Spitter unsaveSpitter, Errors errors) 
 	{
 		if (errors.hasErrors()) {
 			return "registerForm";
 		}
-
+		
 		Spitter spitter = spitterRepository.save(unsaveSpitter);
 		return "redirect:/spitter/" + spitter.getUsername();
 	}

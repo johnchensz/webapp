@@ -25,7 +25,7 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		//configure Servlet 3.0(Tomcat7) multipart support 
-		//限制2M附件，请求大小限制4M，无论文件大小，都写到临时目录中
-		registration.setMultipartConfig(new MultipartConfigElement("/tmp/spittr/uploads", 2097152, 4194304, 0));
+		//限制2M附件，请求大小限制4M，无论文件大小，都写到临时目录中/tmp/spittr/uploads
+		registration.setMultipartConfig(new MultipartConfigElement("/Users/john/dev/temp/spittr/uploads", 2097152, 4194304, 0));
 	}
 }

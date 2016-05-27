@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.junit.Test;
 
 import cn.jcb.dev.spittr.controller.HomeController;
+import cn.jcb.dev.spittr.domain.ProfilePicture;
 import cn.jcb.dev.spittr.domain.Spitter;
 import cn.jcb.dev.spittr.controller.SpitterController;
 import cn.jcb.dev.spittr.data.SpitterRepository;
@@ -100,6 +102,28 @@ public class ControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
 		mockMvc.perform(post("/spitter/register")
+				.param("firstName", "Jack")
+				.param("lastName", "Bauer")
+				.param("username", "jbauer")
+				.param("password", "24hours")).andExpect(redirectedUrl("/spitter/jbauer"));
+		verify(mockRepository, atLeastOnce()).save(unsaved);
+	}
+	
+	@Test
+	public void shouldProcessFileupload() throws Exception {
+		SpitterRepository mockRepository = mock(SpitterRepository.class);
+		
+		MockMultipartFile uploadfile = new MockMultipartFile("profilePicture", "abc.txt", "text/plain", "some xml".getBytes());
+		Spitter unsaved = new Spitter("Jack", "Bauer", "jbauer", "24hours" );
+		unsaved.setProfilePicture(uploadfile);
+		Spitter saved = new Spitter(24L, "Jack", "Bauer", "jbauer", "24hours");
+		saved.setProfilePicture(uploadfile);
+		when(mockRepository.save(unsaved)).thenReturn(saved);	
+		
+		SpitterController controller = new SpitterController(mockRepository);
+		MockMvc mockMvc = standaloneSetup(controller).build();
+		mockMvc.perform(fileUpload("/spitter/register")
+				.file(uploadfile)
 				.param("firstName", "Jack")
 				.param("lastName", "Bauer")
 				.param("username", "jbauer")

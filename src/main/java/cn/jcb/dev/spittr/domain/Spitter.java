@@ -5,9 +5,11 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Spitter {
 	private long id;
+	private MultipartFile profilePicture;
 	@NotNull
 	@Size(min=2, max=30, message="{firstName.size}")
 	private String firstName;
@@ -74,6 +76,14 @@ public class Spitter {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public MultipartFile getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(MultipartFile picture) {
+		this.profilePicture = picture;
 	}
 
 	@Override
