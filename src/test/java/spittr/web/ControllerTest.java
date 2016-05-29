@@ -16,7 +16,6 @@ import org.springframework.web.servlet.view.InternalResourceView;
 import org.junit.Test;
 
 import cn.jcb.dev.spittr.controller.HomeController;
-import cn.jcb.dev.spittr.domain.ProfilePicture;
 import cn.jcb.dev.spittr.domain.Spitter;
 import cn.jcb.dev.spittr.controller.SpitterController;
 import cn.jcb.dev.spittr.data.SpitterRepository;
