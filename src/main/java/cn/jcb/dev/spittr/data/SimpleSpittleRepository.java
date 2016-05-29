@@ -14,7 +14,7 @@ public class SimpleSpittleRepository implements SpittleRepository {
 	
 	@Override
 	public List<Spittle> findSpittles(long max, int count) {
-		spittles = new ArrayList<Spittle>();
+		spittles = new ArrayList<>();
 		for (int i = 0; i < count; i++) {
 			spittles.add( new Spittle(Long.valueOf(i), "Spittle " + i, new Date()) );
 		}

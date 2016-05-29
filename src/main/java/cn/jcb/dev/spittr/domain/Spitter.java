@@ -24,6 +24,7 @@ public class Spitter {
 	private String password;
 	
 	public Spitter(){
+		//spring在处理form request时，form binding会调用缺省无参构造函数
 	}
 	
 	public Spitter(String firstName, String lastName, String username, String password) {

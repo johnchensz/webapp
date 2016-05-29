@@ -7,7 +7,7 @@ public class ProfilePicture {
 	private long filesize;
 	
 	public ProfilePicture(){
-		
+		//form binding时spring会调用缺省无参构造函数
 	}
 	
 	public ProfilePicture(String filename,String originFilename, long filesize){

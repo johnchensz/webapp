@@ -8,16 +8,18 @@ import cn.jcb.dev.spittr.domain.Spitter;
 public class SimpleSpitterRepository implements SpitterRepository {
 
 	private static long id = 1;
+	private static synchronized long idGenerator(){
+		id++;
+		return id;
+	}
 	
 	@Override
 	public Spitter save(Spitter unsaved) {
-		//unsaved.setId(21L);
-		return new Spitter(id++, unsaved.getFirstName(), unsaved.getLastName(), unsaved.getUsername(), unsaved.getPassword());
+		return new Spitter(idGenerator(), unsaved.getFirstName(), unsaved.getLastName(), unsaved.getUsername(), unsaved.getPassword());
 	}
 
 	@Override
 	public Spitter findByUsername(String username) {
-		// TODO Auto-generated method stub
 		return new Spitter(24L, "Jack", "Bauer", "jbauer", "24hours");
 	}
 

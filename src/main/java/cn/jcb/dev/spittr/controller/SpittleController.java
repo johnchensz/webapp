@@ -17,7 +17,7 @@ import cn.jcb.dev.spittr.domain.Spittle;
 @RequestMapping("/spittles")
 public class SpittleController {
 
-	private static final String MAX_LONG_AS_STRING = "238900";//Long.toString(Long.MAX_VALUE);
+	private static final String MAX_LONG_AS_STRING = "238900";
 	
 	private SpittleRepository spittleRepository;
 
@@ -25,13 +25,6 @@ public class SpittleController {
 	public SpittleController(SpittleRepository repository) {
 		this.spittleRepository = repository;
 	}
-
-//	@RequestMapping(method = RequestMethod.GET)
-//	public String spittles(Model model) {
-//		model.addAttribute(spittleRepository.findSpittles(Long.MAX_VALUE, 20));
-//		return "spittles";
-//	}
-	
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
