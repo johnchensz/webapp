@@ -20,7 +20,9 @@ public class SimpleSpitterRepository implements SpitterRepository {
 
 	@Override
 	public Spitter findByUsername(String username) {
-		return new Spitter(24L, "Jack", "Bauer", "jbauer", "24hours");
+		if ("jbauer".equals(username))
+			return new Spitter(24L, "Jack", "Bauer", "jbauer", "24hours");
+		return null;
 	}
 
 }

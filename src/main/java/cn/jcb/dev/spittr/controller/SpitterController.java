@@ -52,6 +52,9 @@ public class SpitterController {
 	@RequestMapping(value="/{username}", method = RequestMethod.GET)
 	public String showSpitterProfile(@PathVariable String username, Model model){
 		Spitter spitter = spitterRepository.findByUsername(username);
+		if (spitter==null){
+			throw new SpitterNotFoundException();
+		}
 		model.addAttribute(spitter);
 		return "profile";		
 	}

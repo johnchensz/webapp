@@ -142,18 +142,6 @@ public class ControllerTest {
 
 	}
 	
-	@Test
-	public void testSpitter() throws Exception {
-		SpitterRepository mockRepository = mock(SpitterRepository.class);
-		Spitter spitter = new Spitter(24L, "Jack", "Bauer", "jbauer", "24hours");
-		when(mockRepository.findByUsername("jbauer")).thenReturn(spitter);
-		
-		SpitterController controller = new SpitterController(mockRepository);
-		MockMvc mockMvc = standaloneSetup(controller).build();
-		mockMvc.perform(get("/spitter/jbauer"))
-			.andExpect(view().name("profile"))
-			.andExpect(model().attributeExists("spitter"))
-			.andExpect(model().attribute("spitter", spitter));
-	}
+
 	
 }
