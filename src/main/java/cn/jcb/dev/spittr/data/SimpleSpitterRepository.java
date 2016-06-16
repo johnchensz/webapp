@@ -15,6 +15,8 @@ public class SimpleSpitterRepository implements SpitterRepository {
 	
 	@Override
 	public Spitter save(Spitter unsaved) {
+		if ("johnchen".equalsIgnoreCase(unsaved.getUsername()) )
+			throw new DuplicateSpitterException();
 		return new Spitter(idGenerator(), unsaved.getFirstName(), unsaved.getLastName(), unsaved.getUsername(), unsaved.getPassword());
 	}
 

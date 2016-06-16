@@ -1,4 +1,4 @@
-package cn.jcb.dev.spittr.controller;
+package cn.jcb.dev.spittr.data;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

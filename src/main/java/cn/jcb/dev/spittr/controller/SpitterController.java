@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import cn.jcb.dev.spittr.data.DuplicateSpitterException;
+import cn.jcb.dev.spittr.data.SpitterNotFoundException;
 import cn.jcb.dev.spittr.data.SpitterRepository;
 import cn.jcb.dev.spittr.domain.Spitter;
 
@@ -57,5 +60,10 @@ public class SpitterController {
 		}
 		model.addAttribute(spitter);
 		return "profile";		
+	}
+	
+	@ExceptionHandler(DuplicateSpitterException.class)
+	public String handlerDuplicateSpitter(){
+		return "error/duplicate";
 	}
 }
