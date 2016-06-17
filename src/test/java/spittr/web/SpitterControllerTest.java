@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 
+import cn.jcb.dev.spittr.controller.AppWideExceptionHandler;
 import cn.jcb.dev.spittr.controller.SpitterController;
 import cn.jcb.dev.spittr.data.DuplicateSpitterException;
 import cn.jcb.dev.spittr.data.SpitterRepository;
@@ -53,7 +54,7 @@ public class SpitterControllerTest {
 		when(mockRepository.save(unsaved)).thenThrow(DuplicateSpitterException.class);
 		
 		SpitterController controller = new SpitterController(mockRepository);
-		MockMvc mockMvc = standaloneSetup(controller).build();
+		MockMvc mockMvc = standaloneSetup(controller).setControllerAdvice(new AppWideExceptionHandler()).build();
 		mockMvc.perform(post("/spitter/register")
 				.param("firstName", unsaved.getFirstName())
 				.param("lastName", unsaved.getLastName())
