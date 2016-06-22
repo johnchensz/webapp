@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Test;
@@ -62,7 +63,10 @@ public class SpitterControllerTest {
 				.param("firstName", "Jack")
 				.param("lastName", "Bauer")
 				.param("username", "jbauer")
-				.param("password", "24hours")).andExpect(redirectedUrl("/spitter/jbauer"));
+				.param("password", "24hours"))
+		.andExpect(redirectedUrl("/spitter/jbauer"))
+		.andExpect(flash().attributeExists("spitter"))
+		.andExpect(flash().attribute("spitter", saved));
 		verify(mockRepository, atLeastOnce()).save(unsaved);
 	}
 	
